@@ -14,4 +14,4 @@ class Card:
         self.value = value
         
     def displayCard(self):
-        print "Suite : ", self.suite,  ", Value: ", self.Value
+        print ("Suite : ", self.suite,  ", Value: ", self.value)
