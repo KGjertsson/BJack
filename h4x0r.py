@@ -7,3 +7,10 @@ Created on Sat Mar 26 21:57:46 2016
 
 a = 5
 print(a)
+
+b='kgaerboeg'
+
+print(b)
+
+
+
