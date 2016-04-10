@@ -3,8 +3,9 @@
 Created on Sat Mar 26 22:36:40 2016
 """
 
-import Card
+from classes.card import Card
+
 card1 = Card(1, 1)
-card2 = Card(2, 2)
+#card2 = Card(2, 2)
 card1.display()
-card2.displayCard()
+#card2.displayCard()

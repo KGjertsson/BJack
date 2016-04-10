@@ -18,6 +18,6 @@ class Card:
     def __init__(self, suite, value):
         self.suite = suite
         self.value = value
-        
+
     def displayCard(self):
         print ("Suite : ", self.suite,  ", Value: ", self.value)
