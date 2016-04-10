@@ -44,17 +44,19 @@ class Dealer:
 
 class Player:
     
+    hand = []
+    
     def __init__(self,player_count):
         pass        
     
-    def giveCard(card):
-        self.current_hand.append(card)
+    def giveCard(self, card):
+        self.hand.append(card)
     
     def clearHand(self):
-        self.current_hand=[]
+        self.hand=[]
         
-    def money(self,number):
-        1=1
+#    def money(self,number):
+#        1=1
     
     def calcSum(self):
         sum = 0
@@ -81,5 +83,3 @@ class Player:
                     if sum <= 21:
                         done = 1
         return sum
-    
-    
