@@ -7,10 +7,11 @@ This is a temporary script file.
 
 import configparser
 from .card import Card
-from .players import Players
+from .players import Player
 from .deck import Deck
 
 class GameEngine:
+    
 
     def __init__(self,):
         self.players_count=-1
@@ -21,6 +22,7 @@ class GameEngine:
         self.dealer_take_limit = -1
         
         self.round_number=1        
+        self.players = []
         
         self.readConfig()
         self.createPlayers()
@@ -38,17 +40,13 @@ class GameEngine:
     
     def createPlayers(self):
         for i in range(self.players_count):
-            self.player[i]=self.Player()
+            self.players.append(Player())
     
     def hit(self,player_index):
-        (value,suite) = self.Deck.pullCard()
-        
-        self.player[player_index].giveCard(Card(value,suite))        
-      
+        self.players[player_index].giveCard(self.Deck.pullCard())
     
     def stay(self,player_index):
         self.nextTurn(self)
-    
         
     def nextTurn(self):
         '''
