@@ -40,6 +40,7 @@ class Deck():
             n = n + 1
             
     def pullCard(self):
-        i=randint(1,range(len(self.cards)))
-        return self.cards[i].value, self.cards[i].suite
-        self.cards.remove(self.cards[i]);
+#        i=randint(1,range(len(self.cards)))
+#        self.cards.remove(self.cards[i]);
+        i = randint(0, len(self.cards) - 1)
+        return self.cards.pop(i)
