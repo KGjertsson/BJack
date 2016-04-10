@@ -26,8 +26,6 @@ class GameEngine:
         self.createPlayers()
 
         
-
-        
     def readConfig(self):
         config = config.ConfigParser()
         config.read('config.ini')
@@ -53,67 +51,13 @@ class GameEngine:
     
         
     def nextTurn(self):
-        
         '''
         0 = dealer        
         1 to n = player ID
         '''
         
-        
     def newRound(self):
+        pass
         
     def bet(self):
-        
-    
-    
-    
-            
-    
-            
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+        pass

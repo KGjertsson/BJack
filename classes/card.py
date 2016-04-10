@@ -1,8 +1,6 @@
 # -*- coding: utf-8 -*-
 """
 Created on Sat Mar 26 22:11:25 2016
-
-@author: KG
 """
 
 class Card:
@@ -24,6 +22,8 @@ class Card:
             name = "Queen"
         elif self.value == 13:
             name = "King"
+        elif self.value == 1:
+            name = "Ace"
         else:
             name = self.value
             
