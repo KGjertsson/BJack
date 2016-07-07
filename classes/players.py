@@ -7,14 +7,13 @@ from .card import Card
 from numpy import *
 
 class Dealer:
-    
-    hand = []
+
     
     def __init__(self):
-        self.current_hand = []
+        self.hand = []
         
     def giveCard(self, pulled):
-        hand.append(pulled)
+        self.hand.append(pulled)
         
     def calcSum(self):
         sum = 0
@@ -79,14 +78,14 @@ class Player:
     def calcSum(self):
         sum = 0
         aces = 0
-        for i in range(len(hand)):
-            if hand[i].value == 1:
+        for i in range(self.hand):
+            if self.hand[i].value == 1:
                aces+=1
                
-            elif hand[i].value > 10:
+            elif self.hand[i].value > 10:
                 sum = sum + 10
             else:
-                sum = sum + hand[i].value
+                sum = sum + self.hand[i].value
         
         if aces > 0:
           low = aces*1 
@@ -97,7 +96,7 @@ class Player:
               sum+=high
               
         if sum == 21:
-            if len(hand) == 2:
+            if len(self.hand) == 2:
                 self.blackjack=True
                     
         return sum

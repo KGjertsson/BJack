@@ -5,7 +5,7 @@ Spyder Editor
 This is a temporary script file.
 """
 
-import configparser
+from configparse import *
 from .card import Card
 from .players import Player
 from .players import Dealer
@@ -101,7 +101,7 @@ class GameEngine:
                         self.players[i].lose()
                         self.saveStats(i,'lose')
                         
-        self.newRound() # Start new round
+        
         
                 
         
@@ -143,7 +143,7 @@ class GameEngine:
             self.players[i].won = 0
             
             #REQUIRE BOT ATTENTION CODE HERE
-            #bet?
+            #bet how much?
             ##
             self.players[i].bet(self.Bot.bet)
             ##
@@ -156,7 +156,7 @@ class GameEngine:
             x+=1
         
         #REQUIRE BOT ATTENTION CODE HERE
-        #double? split? +13 -13?
+        #double? split? +13 -13? no action?
         self.players[i].bet(self.Bot.newRoundAction)
         ##
         
