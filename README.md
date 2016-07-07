@@ -1,23 +1,53 @@
 # BJack
-
-    ^+xw*"""^q_  0 p" F  F _F  p^^"___jM   j  F              F
-      _,,__   q x" [  F J_ J  P  w""""_  _,"  9  _m^`"*____x"    _____
- v,,_w"   "M_ @ `, ",_!u_9__L F #  r^""^^"    f j"      "      _*"   "6_
-     _,,__  B 9_ "v,_Zp*"""""^@u# P _m^"^u,a*"  j   ____       9       ""
-   _F    `4 A_ "*-ap"            ^Lj" _smu,    _* ,-"   9_   _wf
- ^^"__,,_ jL  -- m<                5j! ____*-*^   &       """"     ___
-   p"    9p`^u,av'   This artwork   `,*""""q_   _x" _aa,_        p^" ""u
- ,r  _____!L___,M     is computer    Lsr--x_"^^`" qP     9      J      `M
-   y^    "_    _J      enhanced.     L_,,_ ?_    _#       ^v- -^"
-  _F  __,_`^---"jr                  j___ ""y""^^""_,-r-u_
- r^ j!    ?s_, *"jp                g""""^q_b_    _F     "p      j^^""-w
-    L  _,wma_  _x"jN__          __d"""^c  F  "-^""  _    "c____j'      L
-   j" J"    """  _F 99Nu______g**L_""s  4 A,    _P"""^q_    ""         "-
- m^  j_  _-^""mw^" _' # 9"N""L ^, "s  b #   "--^"      0
-      @ j"   _v-wa+" ," j  #  p  r j qF "q_   _*-wu_   9,     y^`"^w_
-   _,!  0_  f   _m-**" _F _F  L _FjP ?,    "^""    "u    "---^      j
- """     # J   j"   p"""p-^ x^ p" d_   -q__a-mw_    j               `L
-        V  `q  #   f   j   4   b   ^,   __      6_  ?,     _,__       "--
- *`^ww-"     F 9L_ b   1   4   `u_   "-^""*,    jh    ^-xm*"   9z
-            )    0 `+a_ W__ 9,___"^^"+_     L   0                k
-     _x-*v+"     9    0   "b    "_    "p   _0   `&    ___       d_
+ <br />
+youre right. <br />
+"all right. <br />
+you're right. <br />
+okay, fine. <br />
+"okay, fine. <br />
+yes, right here. <br />
+no, not right now. <br />
+"no, not right now. <br />
+"talk to me right now. <br />
+please talk to me right now. <br />
+i'll talk to you right now. <br />
+"i'll talk to you right now. <br />
+"you need to talk to me now. -- <br />
+ <br />
+amazing, isn't it? <br />
+so, what is it? <br />
+it hurts, isnt it? <br />
+why would you do that? <br />
+"you can do it. <br />
+"i can do it. <br />
+I can't do it. <br />
+"i can do it. <br />
+"don't do it. <br />
+"i can do it. <br />
+i couldn't do it. -- <br />
+ <br />
+there is no one else in the world. <br />
+there is no one else in sight. <br />
+they were the only ones who mattered. <br />
+they were the only ones left. <br />
+he had to be with me. <br />
+she had to be with him. <br />
+i had to do this. <br />
+i wanted to kill him. <br />
+i started to cry. <br />
+i turned to him. -- <br />
+ <br />
+i dont like it, he said. <br />
+i waited for what had happened. <br />
+it was almost thirty years ago. <br />
+it was over thirty years ago. <br />
+that was six years ago. <br />
+he had died two years ago. <br />
+ten, thirty years ago. -- "it's all right here. <br />
+"everything is all right here. <br />
+"it's all right here. <br />
+it's all right here. <br />
+we are all right here. <br />
+come here in five minutes. <br />
+"but you need to talk to me now. <br />
+-Google
