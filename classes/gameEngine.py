@@ -23,7 +23,7 @@ class GameEngine:
         self.dealer_take_limit = -1
         self.player_start_money = -1
         
-        self.turn_id=0
+        self.hit_no=0
         
         self.round_number=1    
         
@@ -36,9 +36,8 @@ class GameEngine:
 
         
     def readConfig(self):
-        config =[]
         
-        config = config.ConfigParser()
+        config = ConfigParser()
         config.read('config.ini')
         self.players_count=config['Black Jack']['PlayersCount']
         self.max_bet = config['Black Jack']['MaxBet']
@@ -62,22 +61,27 @@ class GameEngine:
 #        self.nextTurn()
         
     def startTurns(self):
-
-        for i in range(self.players):       
-            stay = False
-            stay=self.bot.hitOrStay(i)
-            while stay == False:
-                self.hit(i)
+        #Starting turns, loop through players, give them choice to do
+        for i in range(self.players):
+            stay=False
+            while True:
                 stay=self.bot.hitOrStay(self.players.calcSum()) #Bot class not created yet
-                
+                if stay:
+                    break
+                else:
+                    self.hit(i) 
+                    
+        #After all players done, do dealer -- in the butt        
         dealer_sum = self.dealer.calcSum()
         while dealer_sum < self.dealer_take_limit[0]:
             self.dealer.giveCard(self.deck.pullCard())
             dealer_sum = self.dealer.calcSum()
         
+        #Check wins and losses
         if dealer_sum > 21:
             for i in range(self.players):
                     self.players[i].win(self.players[i].blackjack)
+                    self.saveStats(i,'win',self.players[i].blackjack)
         else:
             for i in range(self.players):
                 player_sum = self.players[i].calcSum()
@@ -85,16 +89,43 @@ class GameEngine:
                 if dealer_sum == player_sum:
                     if player_sum < self.dealer_take_limit[1]:
                         self.players[i].lose()
+                        self.saveStats(i,'lose')
                     else:
                         self.players[i].even()
+                        self.saveStats(i,'even')
                 else:
                     if player_sum > dealer_sum:
                         self.players[i].win(self.players[i].blackjack)
+                        self.saveStats(i,'win',self.players[i].blackjack)
                     else:
                         self.players[i].lose()
+                        self.saveStats(i,'lose')
+                        
+        self.newRound() # Start new round
+        
                 
-                        
-                        
+        
+        
+        
+        
+    def saveStats(self,player_index,event,blackjack=False,card=-1,turn_id=-1):
+        # FUCKING PIECE OF SHIT LANGUAGE DOES NOT HAVE SWITCH YAYAYAYAYAYAYAYYA 
+        if event == 'win':
+            pass
+        else: 
+            if event == 'lose':
+                pass
+            else: 
+                if event == 'even':
+                    pass
+                else: 
+                    if event ==  'hit':
+                        pass
+                    else: 
+                        if event == 'stay':
+                            pass
+        
+                                
                     
         
     def newRound(self):
@@ -113,9 +144,9 @@ class GameEngine:
             
             #REQUIRE BOT ATTENTION CODE HERE
             #bet?
-            
+            ##
             self.players[i].bet(self.Bot.bet)
-            
+            ##
             
         x=0
         while (x < 2):
@@ -127,6 +158,7 @@ class GameEngine:
         #REQUIRE BOT ATTENTION CODE HERE
         #double? split? +13 -13?
         self.players[i].bet(self.Bot.newRoundAction)
+        ##
         
         self.startTurns()
         
