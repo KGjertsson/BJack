@@ -5,7 +5,7 @@ Spyder Editor
 This is a temporary script file.
 """
 
-from configparse import *
+from configparser import *
 from .card import Card
 from .players import Player
 from .players import Dealer
@@ -48,7 +48,7 @@ class GameEngine:
         self.player_start_money = config['Black Jack']['StartMoney']
     
     def createPlayers(self):
-        for i in range(self.players_count):
+        for i in range(len(self.players_count)):
             self.players.append(Player(self.player_start_money))
     
     def hit(self,player_index):
