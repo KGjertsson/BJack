@@ -1,14 +1,8 @@
-# -*- coding: utf-8 -*-
-"""
-Created on Sat Mar 26 22:47:06 2016
-"""
-
 from .card import Card
 from numpy import *
 
 class Dealer:
 
-    
     def __init__(self):
         self.hand = []
         

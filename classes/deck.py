@@ -1,8 +1,3 @@
-# -*- coding: utf-8 -*-
-"""
-Created on Mon Mar 28 16:57:42 2016
-"""
-
 from .card import Card
 from random import *
 

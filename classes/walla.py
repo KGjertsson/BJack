@@ -1,9 +1,7 @@
-# -*- coding: utf-8 -*-
-"""
-Created on Sat Apr 10 20:47:06 2016
-"""
-
 class WallA:
     
     def __init__(self):
-        self.respect = 0
+        if self.swag_level > 9000:
+            self.respect = 1
+        else:
+            self.respect = 0

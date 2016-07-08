@@ -1,10 +1,3 @@
-# -*- coding: utf-8 -*-
-"""
-Spyder Editor
-
-This is a temporary script file.
-"""
-
 from configparser import *
 from .card import Card
 from .players import Player
@@ -100,32 +93,17 @@ class GameEngine:
                     else:
                         self.players[i].lose()
                         self.saveStats(i,'lose')
-                        
-        
-        
-                
-        
-        
-        
-        
+
+
     def saveStats(self,player_index,event,blackjack=False,card=-1,turn_id=-1):
-        # FUCKING PIECE OF SHIT LANGUAGE DOES NOT HAVE SWITCH YAYAYAYAYAYAYAYYA 
         if event == 'win':
             pass
-        else: 
-            if event == 'lose':
-                pass
-            else: 
-                if event == 'even':
-                    pass
-                else: 
-                    if event ==  'hit':
-                        pass
-                    else: 
-                        if event == 'stay':
-                            pass
-        
-                                
+        elif event == 'lose':
+            pass
+        elif event == 'hit':
+            pass
+        elif event == 'stay':
+            pass
                     
         
     def newRound(self):
@@ -161,8 +139,4 @@ class GameEngine:
         ##
         
         self.startTurns()
-        
-        
-        
-
         
