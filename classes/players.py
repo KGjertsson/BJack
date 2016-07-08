@@ -12,7 +12,7 @@ class Dealer:
     def calcSum(self):
         sum = 0
         aces = []
-        for i in range(len(hand)):
+        for i in range(len(self.hand)):
             if hand[i].value == 1:
                 aces.append[13]
             elif hand[i].value > 10:
@@ -20,7 +20,7 @@ class Dealer:
             else:
                 sum = sum + hand[i].value
         
-        if aces > 0:
+        if len(aces) > 0:
           low = aces*1 
           high = 11+(aces-1)*1
           if sum+high > 21:
@@ -67,7 +67,10 @@ class Player:
         self.bet_money = 0
         
     def bet(self,money):
-        self.bet_money += money      
+        self.bet_money += money   
+        
+    def hit_or_stay(self):
+        return True
         
     def calcSum(self):
         sum = 0

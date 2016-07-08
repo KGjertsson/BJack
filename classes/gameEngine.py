@@ -55,10 +55,11 @@ class GameEngine:
         
     def initialize_board(self):
         #Starting turns, loop through players, give them choice to do
-        for i in range(self.players):
+        for i in range(len(self.players)):
+            bot = self.players[i]            
             stay=False
             while True:
-                stay=self.bot.hitOrStay(self.players.calcSum()) #Bot class not created yet
+                stay=bot.hit_or_stay() #Bot class not created yet
                 if stay:
                     break
                 else:

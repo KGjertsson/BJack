@@ -5,3 +5,4 @@ class WallA:
             self.respect = 1
         else:
             self.respect = 0
+        print('Säg jag svär?')
