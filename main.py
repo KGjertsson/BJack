@@ -10,4 +10,5 @@ if __name__ == "__main__":
     engine = GameEngine()
     engine.readConfig()
     engine.createPlayers()
+    enigne.initialize_board()
     bot = jack()

@@ -53,7 +53,7 @@ class GameEngine:
 #    def stay(self,player_index):
 #        self.nextTurn()
         
-    def startTurns(self):
+    def initialize_board(self):
         #Starting turns, loop through players, give them choice to do
         for i in range(self.players):
             stay=False
