@@ -49,6 +49,7 @@ class GameEngine:
         self.players[player_index].giveCard(self.Deck.pullCard())
         if self.players[player_index].calcSum() > 21:
             self.players[player_index].lose()
+            self.player_turn +=1
         return player_index, self.players[player_index].state, self.players[player_index].hand, self.players[player_index].calc_sum()
             
     def bet(self,player_index,money):
@@ -62,39 +63,48 @@ class GameEngine:
     def initialize_board(self):
         self.deck = Deck(self.n_decks)
         self.player_turn = -1
-            
+    
+    def deal_cards(self):
+        x=0
+        while (x < 2):
+            self.dealer.give_card(self.deck.pull_card)
+            for i in range(self.players):
+                self.players[i].give_card(self.deck.pull_card)
+                x+=1
+                    
     def turn_handler(self):
         if self.player_turn == -1:
-            x=0
-            while (x < 2):
-                self.dealer.give_card(self.deck.pull_card)
-                for i in range(self.players):
-                    self.players[i].give_card(self.deck.pull_card)
-                    x+=1
+            
+            self.deal_cards()
+            
             self.player_turn += 1
             return self.player_turn, self.players[player_turn].hand, self.players[player_turn].calc_sum()
-        elif self.player_turn < len(self.players): #len is 1 longer than max index since it starts on 0
-            return self.player_turn, selfplayers[player_turn].hand, self.players[player_turn].calc_sum()
-        elif self.player_turn == len(self.players):
             
+        elif self.player_turn < len(self.players): #len is 1 longer than max index since it starts on 0
+            # SEND INFO TO MAIN
+            return self.player_turn, self.players[player_turn].hand, self.players[player_turn].calc_sum()
+            
+        elif self.player_turn == len(self.players):
+            self.round_end()
+            return self.player_turn, self.dealer.hand, self.players 
         
-        #Starting turns, loop through players, give them choice to do
 
-                    
-        #After all players done, do dealer -- in the butt        
-        dealer_sum = self.dealer.calc_cum()
-        while dealer_sum < self.dealer_take_limit[0]:
-            self.dealer.give_card(self.deck.pull_card())
-            dealer_sum = self.dealer.calc_sum()
+      
+
         
-        #Check wins and losses
-        if dealer_sum > 21:
-            for i in range(self.players):
-                    self.players[i].win(self.players[i].blackjack)
-                    self.save_stats(i,'win',self.players[i].blackjack)
-        else:
-            for i in range(self.players):
-                player_sum = self.players[i].calc_sum()
+        def round_end(self):
+            #Deal to dealer and check win conditions
+            dealer_sum = self.dealer.calc_sum()
+            while dealer_sum < self.dealer_take_limit[0]:
+                self.dealer.give_card(self.deck.pull_card())
+                dealer_sum = self.dealer.calc_sum()
+            if dealer_sum > 21:
+                for i in range(self.players):
+                        self.players[i].win(self.players[i].blackjack)
+                        self.save_stats(i,'win',self.players[i].blackjack)
+            else:
+                for i in range(self.players):
+                    player_sum = self.players[i].calc_sum()
                 
                 if dealer_sum == player_sum:
                     if player_sum < self.dealer_take_limit[1]:

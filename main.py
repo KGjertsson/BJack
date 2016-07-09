@@ -26,19 +26,22 @@ if __name__ == "__main__":
     while round_id < max_rounds:
         
         engine.new_round()
-        player_turn, player_cards, player_sum = engine.turnhandler()
+        player_turn, player_cards, player_sum = engine.turn_handler()
 
         while player_turn < len_players:
         
-            player_turn, player_cards, player_sum = engine.turnhandler()    
+            player_turn, player_cards, player_sum = engine.turn_handler()    
             action, bet_amount = mr_jack[player_turn].ation(player_cards,player_sum)
             if action == 'bet':
-                engine.Bet(player_turn,bet_amount)
+                engine.bet(player_turn,bet_amount)
             else:
-                player_turn=engine.Stay(player_turn)
+                player_turn=engine.stay(player_turn)
+        
+        round_end_stats = engine.turn_handler()        
+        
         round_id +=1
     
-#    ########## BETTING HERE ###########################
+#    
 #    for i in range(len_players):
 #        bet_amount=mr_jack[i].bet() #do calculation on how much we should bet, no info of cards at bet in game only remember old infos
 #        engine.bet(i,bet_amount)
