@@ -55,7 +55,7 @@ class Player:
         self.lost = 1
         
     def win(self,blackjack):
-        #WE FUCKINg won
+        #WE FUCKING won
         if blackjack == True:
             self.money += self.bet_money*1.5
             self.won = 1  

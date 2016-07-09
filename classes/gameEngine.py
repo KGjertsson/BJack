@@ -3,6 +3,7 @@ from .card import Card
 from .players import Player
 from .players import Dealer
 from .deck import Deck
+from .bot import bot
 
 class GameEngine:
     
@@ -13,7 +14,7 @@ class GameEngine:
         self.min_bet = -1
         self.nDecks = -1
         self.round_shuffle = -1
-        self.dealer_take_limit = -1
+        self.dealer_take_limit = [-1, -1]
         self.player_start_money = -1
         
         self.hit_no=0
@@ -37,7 +38,7 @@ class GameEngine:
         self.min_bet = config['Black Jack']['MinBet']
         self.nDecks = config['Black Jack']['Decks']
         self.round_shuffle = config['Black Jack']['RoundShuffle']
-        self.dealer_take_limit = config['Black Jack']['DealerTakeLimit']
+        self.dealer_take_limit = [map(int, x) for x in config['Black Jack']['DealerTakeLimit']]
         self.player_start_money = config['Black Jack']['StartMoney']
     
     def createPlayers(self):
