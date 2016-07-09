@@ -9,6 +9,6 @@ class BJBot:
     def configure(self):
         config = ConfigParser()
         config.read('bot_config.ini')
-        test = config['Black Jack']['TestMoney']
-        print(test)
+        test = config['Bot']['TestMoney']
+        # add suitable values
         
