@@ -1,5 +1,5 @@
 from configparser import *
-from .card import Card
+
 from .players import Player
 from .players import Dealer
 from .deck import Deck
@@ -16,20 +16,16 @@ class GameEngine:
         self.round_shuffle = -1
         self.dealer_take_limit = [-1, -1]
         self.player_start_money = -1
+        self.player_turn=-1
         
-        self.hit_no=0
         
-        self.round_number=1    
+#        self.round_number=1    
         
         self.players = []
-        self.deck = Deck(self.n_decks)
+        
         self.dealer = Dealer()
         
-        # i thinkg it's a bit weird to have this here, probably clearer to 
-        # call them separately from main
-        
-        # self.read_config()
-        # self.create_players()
+
 
         
     def read_config(self):
@@ -47,32 +43,43 @@ class GameEngine:
     def create_players(self):
         for i in range(len(self.players_count)):
             self.players.append(Player(self.player_start_money))
+        return len(self.players)
     
     def hit(self,player_index):
         self.players[player_index].giveCard(self.Deck.pullCard())
         if self.players[player_index].calcSum() > 21:
             self.players[player_index].lose()
-           
+        return player_index, self.players[player_index].state, self.players[player_index].hand, self.players[player_index].calc_sum()
+            
+    def bet(self,player_index,money):
+        self.players[player_index].bet_money += money              
+        #maybe check money is enough or something else throw error back
         
-#    def stay(self,player_index):
-#        self.nextTurn()
+    def stay(self,player_index):
+        self.player_turn +=1
+        return player_turn
         
     def initialize_board(self):
+        self.deck = Deck(self.n_decks)
+        self.player_turn = -1
+            
+    def turn_handler(self):
+        if self.player_turn == -1:
+            x=0
+            while (x < 2):
+                self.dealer.give_card(self.deck.pull_card)
+                for i in range(self.players):
+                    self.players[i].give_card(self.deck.pull_card)
+                    x+=1
+            self.player_turn += 1
+            return self.player_turn, self.players[player_turn].hand, self.players[player_turn].calc_sum()
+        elif self.player_turn < len(self.players): #len is 1 longer than max index since it starts on 0
+            return self.player_turn, selfplayers[player_turn].hand, self.players[player_turn].calc_sum()
+        elif self.player_turn == len(self.players):
+            
+        
         #Starting turns, loop through players, give them choice to do
-        for i in range(len(self.players)):
 
-            ###################################################
-            # CHANGE STUFF HERE, BOT IS WRONGLY ASSIGNED!!!!! #           
-            ###################################################
-
-            bot = self.players[i]            
-            stay=False
-            while True:
-                stay=bot.hit_or_stay() #Bot class not created yet
-                if stay:
-                    break
-                else:
-                    self.hit(i) 
                     
         #After all players done, do dealer -- in the butt        
         dealer_sum = self.dealer.calc_cum()
@@ -117,7 +124,8 @@ class GameEngine:
                     
         
     def new_round(self):
-        self.round_id = 0
+        
+        self.player_turn = -1
         if self.round_shuffle == 1:
             self.deck = Deck(self.n_decks)
         else:
@@ -127,25 +135,13 @@ class GameEngine:
         for i in range(self.players):
             self.players[i].clear_hand()
             self.dealer.clear_hand()
-            self.players[i].lost = 0
-            self.players[i].won = 0
+            self.players[i].state = 'NONE'
             
-            #REQUIRE BOT ATTENTION CODE HERE
-            #bet how much?
-            ##
-            self.players[i].bet(self.Bot.bet)
-            ##
-            
-        x=0
-        while (x < 2):
-            self.dealer.give_card(self.deck.pull_card)
-            for i in range(self.players):
-                self.players[i].give_card(self.deck.pull_card)
-            x+=1
+
         
-        #REQUIRE BOT ATTENTION CODE HERE
-        #double? split? +13 -13? no action?
-        self.players[i].bet(self.Bot.new_round_action)
+             
         
-        initialize_board()
+
+        
+        
         

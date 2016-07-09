@@ -33,8 +33,7 @@ class Player:
     def __init__(self,player_start_money):
         self.money=player_start_money
         self.bet_money=0
-        self.lost = 0
-        self.won = 0
+        self.state = 'NONE' #Can be none, won, lost
         self.hand=[]
         self.blackjack=False
     
@@ -48,22 +47,22 @@ class Player:
     def lose(self):
         #WE FUCKING LOST
         self.money -= self.bet_money
-        self.lost = 1
+        self.state = 'LOST'
+        
         
     def win(self,blackjack):
         #WE FUCKING won
         if blackjack == True:
             self.money += self.bet_money*1.5
-            self.won = 1  
+            self.state = 'WON'  
         else:
-            self.won = 1
+            self.state = 'WON' 
             self.money += self.bet_money
             
     def even(self):
         self.bet_money = 0
-        
-    def bet(self,money):
-        self.bet_money += money   
+        self.state = 'EVEN'
+
         
     def hit_or_stay(self):
         return True
