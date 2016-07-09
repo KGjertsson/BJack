@@ -6,10 +6,10 @@ class Dealer:
     def __init__(self):
         self.hand = []
         
-    def giveCard(self, pulled):
+    def give_card(self, pulled):
         self.hand.append(pulled)
         
-    def calcSum(self):
+    def calc_sum(self):
         sum = 0
         aces = []
         for i in range(len(self.hand)):
@@ -19,7 +19,6 @@ class Dealer:
                 sum = sum + 10
             else:
                 sum = sum + hand[i].value
-        
         if len(aces) > 0:
           low = aces*1 
           high = 11+(aces-1)*1
@@ -27,12 +26,9 @@ class Dealer:
               sum+=low
           else:
               sum+=high
-                          
-       
         return sum
 
 class Player:
-    
     
     def __init__(self,player_start_money):
         self.money=player_start_money
@@ -42,10 +38,10 @@ class Player:
         self.hand=[]
         self.blackjack=False
     
-    def giveCard(self, card):
+    def give_Card(self, card):
         self.hand.append(card)
     
-    def clearHand(self):
+    def clear_hand(self):
         self.hand=[]
         self.blacjack=False
         
@@ -72,7 +68,7 @@ class Player:
     def hit_or_stay(self):
         return True
         
-    def calcSum(self):
+    def calc_sum(self):
         sum = 0
         aces = 0
         for i in range(self.hand):
@@ -97,5 +93,4 @@ class Player:
                 self.blackjack=True
                     
         return sum
-    
     
