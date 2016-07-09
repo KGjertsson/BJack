@@ -4,7 +4,6 @@ from classes.game_engine import GameEngine
 from classes.walla import WallA
 from classes.bot import BJBot
 import tkinter as tk
-import tkinter as tk
 
 
 if __name__ == "__main__":
