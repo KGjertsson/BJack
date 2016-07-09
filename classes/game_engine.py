@@ -3,7 +3,7 @@ from .card import Card
 from .players import Player
 from .players import Dealer
 from .deck import Deck
-from .bot import bot
+from .bot import BJBot
 
 class GameEngine:
     
