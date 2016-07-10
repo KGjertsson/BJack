@@ -12,3 +12,14 @@ class BJBot:
         test = config['Bot']['TestMoney']
         # add suitable values
         
+    def action(self,player_cards,player_sum):
+        action = 'NONE'
+        if player_sum < 17:
+            action = 'hit'
+            return action, 0
+        else:
+            action = 'stay'
+            return action, 0
+        
+        
+        

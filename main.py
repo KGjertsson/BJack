@@ -26,13 +26,18 @@ if __name__ == "__main__":
         
         engine.new_round()
         player_turn, player_cards, player_sum = engine.turn_handler()
-
-        while player_turn < len_players:
         
-            player_turn, player_cards, player_sum = engine.turn_handler()    
+        while player_turn < len_players-1:
+            print('before turnhandler',player_turn)
+            
+            player_turn, player_cards, player_sum = engine.turn_handler() 
+            
+            print('after turnhandler',player_turn)
             action, bet_amount = mr_jack[player_turn].action(player_cards,player_sum)
-            if action == 'bet':
-                engine.bet(player_turn,bet_amount)
+            print(action)
+            
+            if action == 'hit':
+                engine.hit(player_turn)
             else:
                 player_turn=engine.stay(player_turn)
         

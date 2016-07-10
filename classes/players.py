@@ -11,21 +11,24 @@ class Dealer:
         
     def calc_sum(self):
         sum = 0
-        aces = []
+        aces = 0
         for i in range(len(self.hand)):
-            if hand[i].value == 1:
-                aces.append[13]
-            elif hand[i].value > 10:
+            if self.hand[i].value == 1:
+               aces+=1
+               
+            elif self.hand[i].value > 10:
                 sum = sum + 10
             else:
-                sum = sum + hand[i].value
-        if len(aces) > 0:
+                sum = sum + self.hand[i].value
+        
+        if aces > 0:
           low = aces*1 
           high = 11+(aces-1)*1
           if sum+high > 21:
               sum+=low
           else:
               sum+=high
+                    
         return sum
         
     def clear_hand(self):
