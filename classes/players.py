@@ -27,6 +27,10 @@ class Dealer:
           else:
               sum+=high
         return sum
+        
+    def clear_hand(self):
+        self.hand=[]
+
 
 class Player:
     
@@ -37,12 +41,12 @@ class Player:
         self.hand=[]
         self.blackjack=False
     
-    def give_Card(self, card):
+    def give_card(self, card):
         self.hand.append(card)
     
     def clear_hand(self):
         self.hand=[]
-        self.blacjack=False
+        self.blackjack=False
         
     def lose(self):
         #WE FUCKING LOST
@@ -70,7 +74,7 @@ class Player:
     def calc_sum(self):
         sum = 0
         aces = 0
-        for i in range(self.hand):
+        for i in range(len(self.hand)):
             if self.hand[i].value == 1:
                aces+=1
                

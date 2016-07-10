@@ -16,7 +16,7 @@ class GameEngine:
         self.round_shuffle = -1
         self.dealer_take_limit = [-1, -1]
         self.player_start_money = -1
-        self.player_turn=-1
+        self.player_turn = -1
         
         
 #        self.round_number=1    
@@ -35,7 +35,7 @@ class GameEngine:
         self.players_count=config['Black Jack']['PlayersCount']
         self.max_bet = config['Black Jack']['MaxBet']
         self.min_bet = config['Black Jack']['MinBet']
-        self.n_decks = config['Black Jack']['Decks']
+        self.n_decks = int(config['Black Jack']['Decks'])
         self.round_shuffle = config['Black Jack']['RoundShuffle']
         self.dealer_take_limit = [map(int, x) for x in config['Black Jack']['DealerTakeLimit']]
         self.player_start_money = config['Black Jack']['StartMoney']
@@ -67,9 +67,11 @@ class GameEngine:
     def deal_cards(self):
         x=0
         while (x < 2):
-            self.dealer.give_card(self.deck.pull_card)
-            for i in range(self.players):
-                self.players[i].give_card(self.deck.pull_card)
+            current_card = self.deck.pull_card()
+            self.dealer.give_card(current_card)
+            for i in range(len(self.players)):
+                current_card = self.deck.pull_card()
+                self.players[i].give_card(current_card)
                 x+=1
                     
     def turn_handler(self):
@@ -78,11 +80,11 @@ class GameEngine:
             self.deal_cards()
             
             self.player_turn += 1
-            return self.player_turn, self.players[player_turn].hand, self.players[player_turn].calc_sum()
+            return self.player_turn, self.players[self.player_turn].hand, self.players[self.player_turn].calc_sum()
             
         elif self.player_turn < len(self.players): #len is 1 longer than max index since it starts on 0
             # SEND INFO TO MAIN
-            return self.player_turn, self.players[player_turn].hand, self.players[player_turn].calc_sum()
+            return self.player_turn, self.players[self.player_turn].hand, self.players[self.player_turn].calc_sum()
             
         elif self.player_turn == len(self.players):
             self.round_end()
@@ -139,12 +141,12 @@ class GameEngine:
         if self.round_shuffle == 1:
             self.deck = Deck(self.n_decks)
         else:
-            if not self.deck.card:
+            if not self.deck.cards:
                 self.deck = Deck(self.n_decks)
-            
-        for i in range(self.players):
-            self.players[i].clear_hand()
-            self.dealer.clear_hand()
+        
+        self.dealer.clear_hand()   
+        for i in range(len(self.players)):
+            self.players[i].clear_hand()            
             self.players[i].state = 'NONE'
             
 

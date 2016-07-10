@@ -19,6 +19,6 @@ class Deck():
                 suite = suite + 1
             n = n + 1
             
-    def pullCard(self):
+    def pull_card(self):
         i = randint(0, len(self.cards) - 1)
         return self.cards.pop(i)
