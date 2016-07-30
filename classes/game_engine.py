@@ -77,27 +77,8 @@ class GameEngine:
                 self.players[i].give_card(current_card)
                 x+=1
                     
-    def turn_handler(self):
-        if self.player_turn == -1:
-            
-            self.deal_cards()
-            
-            self.player_turn += 1
-            return self.player_turn, self.players[self.player_turn].hand, self.players[self.player_turn].calc_sum()
-            
-        elif self.player_turn < len(self.players): #len is 1 longer than max index since it starts on 0
-            # SEND INFO TO MAIN
-            return self.player_turn, self.players[self.player_turn].hand, self.players[self.player_turn].calc_sum()
-            
-        elif self.player_turn == len(self.players):
-            
-            self.round_end()
-            return self.player_turn, self.dealer.hand, self.players 
-        
 
       
-
-        
     def round_end(self):
         #Deal to dealer and check win conditions
         dealer_sum = self.dealer.calc_sum()
