@@ -10,9 +10,9 @@ class Stats:
 
     def __init__(self):
         self.round = []
-        self.
+#        self.
         
-    def save()
+#    def save()
         
         
     

@@ -6,9 +6,13 @@ from .deck import Deck
 from .bot import BJBot
 
 class GameEngine:
-    
-    def __init__(self,):
 
+    def __init__(self,):
+        """
+        Initializes the Game Engine object. All parameters are set to -1 and the
+        delaer object is instantiated.
+        """
+        
         self.players_count=-1
         self.max_bet = -1
         self.min_bet = -1
@@ -17,18 +21,18 @@ class GameEngine:
         self.dealer_take_limit = [-1, -1]
         self.player_start_money = -1
         self.player_turn = -1
-        
-        
-#        self.round_number=1    
-        
-        self.players = []
-        
+#        self.round_number=1            
+        self.players = []        
         self.dealer = Dealer()
         
 
-
-        
+           
     def read_config(self):
+        """
+        Reads the config file. The parameters that are read are player count,
+        max bet, min bet, number of decks used, round shuffle, dealer take
+        limit 1, dealer take limit 2.
+        """ 
         
         config = ConfigParser()
         config.read('config.ini')
@@ -43,10 +47,12 @@ class GameEngine:
         print (self.dealer_take_limit[1])
         self.player_start_money = int(config['Black Jack']['StartMoney'])
     
+    
     def create_players(self):
         for i in range(self.players_count):
             self.players.append(Player(self.player_start_money))
         return len(self.players)
+    
     
     def hit(self,player_index):
         self.players[player_index].give_card(self.deck.pull_card())
@@ -54,18 +60,22 @@ class GameEngine:
             self.players[player_index].lose()
             self.player_turn +=1
         return player_index, self.players[player_index].state, self.players[player_index].hand, self.players[player_index].calc_sum()
-            
+         
+    
     def bet(self,player_index,money):
         self.players[player_index].bet_money += money              
         #maybe check money is enough or something else throw error back
+        
         
     def stay(self,player_index):
         self.player_turn +=1
         return self.player_turn
         
+    
     def initialize_board(self):
         self.deck = Deck(self.n_decks)
         self.player_turn = -1
+    
     
     def deal_cards(self):
         x=0
@@ -76,9 +86,8 @@ class GameEngine:
                 current_card = self.deck.pull_card()
                 self.players[i].give_card(current_card)
                 x+=1
-                    
 
-      
+
     def round_end(self):
         #Deal to dealer and check win conditions
         dealer_sum = self.dealer.calc_sum()
@@ -121,7 +130,6 @@ class GameEngine:
                     
         
     def new_round(self):
-        
         self.player_turn = -1
         if self.round_shuffle == 1:
             self.deck = Deck(self.n_decks)
@@ -134,11 +142,3 @@ class GameEngine:
             self.players[i].clear_hand()            
             self.players[i].state = 'NONE'
             
-
-        
-             
-        
-
-        
-        
-        

@@ -6,20 +6,22 @@ import tkinter as tk
 
 
 if __name__ == "__main__":
+    print('... initializing game engine')
     engine = GameEngine()
-    
     engine.read_config() #Maybe read configs in main and send variables in engine=GameEngine(variables)??
     len_players=engine.create_players()
     mr_jack=[]
-    stats=Stats()
+#    stats=Stats()
     
     for i in range(len_players):
-        mr_jack.append( BJBot() )#  BLOWJOB BOT
+        mr_jack.append(BJBot())#  BLOWJOB BOT
         mr_jack[i].configure()
     
     ###################################################
     ########### START THIS PIECE OF SHIT GAME #########
     ###################################################
+    print('... initializing game')
+        
     engine.initialize_board()
     round_id = 0
     max_rounds = 100 # TEMPORARY LIMIT, 
