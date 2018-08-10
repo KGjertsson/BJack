@@ -1,6 +1,6 @@
 from distutils.core import setup
 
-INSTALL_REQUIRES = ['numpy', 'keras', 'keras-rl']
+INSTALL_REQUIRES = ['numpy', 'keras']
 
 setup(
     name='bj_bot',
