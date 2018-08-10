@@ -64,6 +64,21 @@ class Game:
             self.dealer.hand = [Card('hearts', 2)]
             self.dealer.hand[0].set_value = -1
 
+    @staticmethod
+    def find_winner(hand_value, dealer_hand_value, player_index):
+        if hand_value != -1:
+            if dealer_hand_value != -1:
+                if hand_value > dealer_hand_value:
+                    print('Player {} won'.format(player_index + 1))
+                elif hand_value == dealer_hand_value:
+                    print('Player {} played even with the dealer.'.format(player_index + 1))
+                else:
+                    print('Player {} lost'.format(player_index + 1))
+            else:
+                print('Player {} won'.format(player_index + 1))
+        else:
+            print('Player {} lost'.format(player_index + 1))
+
     def play(self):
         for player_index, player in enumerate(self.players):
             print('player {}, what do you want to do?'.format(player_index + 1))
@@ -73,16 +88,4 @@ class Game:
         dealer_hand_value = self.dealer.value_of_hand()
         for player_index, player in enumerate(self.players):
             hand_value = player.value_of_hand()
-
-            if hand_value != -1:
-                if dealer_hand_value != -1:
-                    if hand_value > dealer_hand_value:
-                        print('Player {} won'.format(player_index + 1))
-                    elif hand_value == dealer_hand_value:
-                        print('Player {} played even with the dealer.'.format(player_index + 1))
-                    else:
-                        print('Player {} lost'.format(player_index + 1))
-                else:
-                    print('Player {} won'.format(player_index + 1))
-            else:
-                print('Player {} lost'.format(player_index + 1))
+            self.find_winner(hand_value, dealer_hand_value, player_index)
