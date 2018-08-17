@@ -7,7 +7,7 @@ from ..components.card import Card
 #   1. split
 #   2. black jack
 
-class Game:
+class InteractiveGame:
     def __init__(self, nbr_players, nbr_decks):
         self.deck = Deck(nbr_decks)
         self.deck.shuffle()
