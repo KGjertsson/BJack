@@ -11,4 +11,4 @@ def play_game(agent_type, game_type, nbr_players, nbr_decks, starting_cash, poss
                                     agent_type=agent_type,
                                     actions=possible_actions,
                                     verbose=verbose)
-    game.play()
+    return game.play()

@@ -1,6 +1,9 @@
 from distutils.core import setup
 
-INSTALL_REQUIRES = ['numpy', 'keras']
+INSTALL_REQUIRES = ['numpy', 'matplotlib']
+TRAINING_REQUIRES = ['keras']
+
+# TODO: fix extras require with keras
 
 setup(
     name='bj_bot',

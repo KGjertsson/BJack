@@ -84,20 +84,29 @@ class InteractiveGame:
             self.dealer.hand = [Card('hearts', 2)]
             self.dealer.hand[0].set_value = -1
 
-    @staticmethod
-    def find_winner(hand_value, dealer_hand_value, player_index):
+    def find_winner(self, hand_value, dealer_hand_value, player_index):
+        victory = 0
         if hand_value != -1:
             if dealer_hand_value != -1:
                 if hand_value > dealer_hand_value:
-                    print('Player {} won'.format(player_index + 1))
+                    if self.verbose == 1:
+                        print('Player {} won'.format(player_index + 1))
+                    victory = 1
                 elif hand_value == dealer_hand_value:
-                    print('Player {} played even with the dealer.'.format(player_index + 1))
+                    if self.verbose == 1:
+                        print('Player {} played even with the dealer.'.format(player_index + 1))
+                    victory = 2
                 else:
-                    print('Player {} lost'.format(player_index + 1))
+                    if self.verbose == 1:
+                        print('Player {} lost'.format(player_index + 1))
             else:
-                print('Player {} won'.format(player_index + 1))
+                if self.verbose == 1:
+                    print('Player {} won'.format(player_index + 1))
+                victory = 1
         else:
-            print('Player {} lost'.format(player_index + 1))
+            if self.verbose == 1:
+                print('Player {} lost'.format(player_index + 1))
+        return victory
 
     def play(self):
         for player_index, player in enumerate(self.players):
@@ -107,6 +116,8 @@ class InteractiveGame:
         self.dealer_draws()
 
         dealer_hand_value = self.dealer.value_of_hand()
+        winners = list()
         for player_index, player in enumerate(self.players):
             hand_value = player.value_of_hand()
-            self.find_winner(hand_value, dealer_hand_value, player_index)
+            winners.append(self.find_winner(hand_value, dealer_hand_value, player_index))
+        return winners, [player.bet() for player in self.players]
