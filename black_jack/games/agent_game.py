@@ -10,4 +10,4 @@ class AgentGame(InteractiveGame):
             self.players = [RandomAgent(player=player, **agent_kwargs) for player in self.players]
 
     def get_action(self, player):
-        return player.action()
+        return player.action(state={'player': player, 'dealer': self.dealer})
