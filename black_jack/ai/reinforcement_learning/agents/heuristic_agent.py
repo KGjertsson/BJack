@@ -1,25 +1,19 @@
-from abc import ABC, abstractmethod
+from .abstract_agent import AbstractAgent
 
-
-class AbstractAgent(ABC):
-    @abstractmethod
+class HeuristicAgent(AbstractAgent):
     def action(self, state):
         pass
 
-    @abstractmethod
     def bet(self):
         pass
 
-    @abstractmethod
     def value_of_hand(self):
         pass
 
-    @abstractmethod
     @property
     def hand(self):
-        pass
+        return None
 
-    @abstractmethod
     @hand.setter
     def hand(self, new_hand):
         pass

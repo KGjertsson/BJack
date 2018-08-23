@@ -1,7 +1,9 @@
 import numpy as np
 
+from .abstract_agent import AbstractAgent
 
-class RandomAgent:
+
+class RandomAgent(AbstractAgent):
     def __init__(self, cash, actions, player):
         self.cash = cash
         self.initial_cash = cash

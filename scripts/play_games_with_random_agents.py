@@ -1,7 +1,5 @@
-import numpy as np
-import matplotlib.pyplot as plt
-
 from black_jack.ai.inference import play
+import matplotlib.pyplot as plt
 
 if __name__ == '__main__':
     agent_type = 'random'
@@ -26,4 +24,4 @@ if __name__ == '__main__':
         # print(stats, bets, current_cash)
         money_over_time.append(current_cash)
 
-    plt.show(plt.plot(np.stack(money_over_time)))
+    plt.show(plt.plot(money_over_time))
