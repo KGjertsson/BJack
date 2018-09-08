@@ -2,7 +2,7 @@ from black_jack.ai.inference import play
 import matplotlib.pyplot as plt
 
 if __name__ == '__main__':
-    agent_type = 'random'
+    agent_type = 'heuristic'
     game_type = 'agent_game'
     nbr_players = 1
     nbr_decks = 6

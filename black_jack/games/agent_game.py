@@ -1,4 +1,5 @@
 from ..ai.reinforcement_learning.agents.random_agent import RandomAgent
+from ..ai.reinforcement_learning.agents.heuristic_agent import HeuristicAgent
 from .interactive_game import InteractiveGame
 
 
@@ -7,7 +8,13 @@ class AgentGame(InteractiveGame):
         super().__init__(nbr_players, nbr_decks, verbose)
 
         if agent_type == 'random':
-            self.players = [RandomAgent(player=player, **agent_kwargs) for player in self.players]
+            self.agent = [RandomAgent(player=player, **agent_kwargs) for player in self.agent]
+        elif agent_type == 'heuristic':
+            self.agent = [HeuristicAgent(player=player, **agent_kwargs) for player in self.agent]
 
     def get_action(self, player):
         return player.action(state={'player': player, 'dealer': self.dealer})
+
+    def play(self):
+        winners = super().play()
+        return winners, [player.bet() for player in self.agent]

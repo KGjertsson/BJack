@@ -1,25 +1,28 @@
-from abc import ABC, abstractmethod
+import abc
 
 
-class AbstractAgent(ABC):
-    @abstractmethod
+class AbstractAgent(abc.ABC):
+    def __init__(self, cash, actions, player):
+        self.cash = cash
+        self.initial_cash = cash
+        self.actions = actions
+        self.player = player
+
+    @abc.abstractmethod
     def action(self, state):
         pass
 
-    @abstractmethod
+    @abc.abstractmethod
     def bet(self):
         pass
 
-    @abstractmethod
     def value_of_hand(self):
-        pass
+        return self.player.value_of_hand()
 
-    @abstractmethod
     @property
     def hand(self):
-        pass
+        return None
 
-    @abstractmethod
     @hand.setter
     def hand(self, new_hand):
         pass
