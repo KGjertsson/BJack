@@ -10,6 +10,7 @@ if __name__ == '__main__':
     current_cash = starting_cash
     possible_actions = [0, 1]
     verbose = 0
+    betting_strategy = 'random'
 
     money_over_time = play.play_while_cash_left(current_cash,
                                                 agent_type=agent_type,
@@ -18,6 +19,7 @@ if __name__ == '__main__':
                                                 nbr_decks=nbr_decks,
                                                 starting_cash=starting_cash,
                                                 possible_actions=possible_actions,
-                                                verbose=verbose)
+                                                verbose=verbose,
+                                                betting_strategy=betting_strategy)
 
     plt.show(plt.plot(money_over_time))

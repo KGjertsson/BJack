@@ -9,11 +9,3 @@ class RandomAgent(AbstractAgent):
 
     def bet(self):
         return np.random.randint(0, self.initial_cash // 10)
-
-    @property
-    def hand(self):
-        return self.player.hand
-
-    @hand.setter
-    def hand(self, new_hand):
-        self.player.hand = new_hand

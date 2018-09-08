@@ -21,8 +21,8 @@ class AbstractAgent(abc.ABC):
 
     @property
     def hand(self):
-        return None
+        return self.player.hand
 
     @hand.setter
     def hand(self, new_hand):
-        pass
+        self.player.hand = new_hand
