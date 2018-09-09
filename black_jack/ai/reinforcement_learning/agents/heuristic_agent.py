@@ -1,5 +1,3 @@
-import numpy as np
-
 from .abstract_agent import AbstractAgent
 from . import heuristic_tables
 

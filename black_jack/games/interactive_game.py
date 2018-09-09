@@ -23,13 +23,13 @@ class InteractiveGame:
         self.deck = Deck(self.nbr_decks)
         self.deck.shuffle()
         self.dealer = Player([card for card in self.deck.draw(1)])
-        self.agent = [Player([card for card in self.deck.draw(2)]) for _ in range(nbr_players)]
+        self.agents = [Player([card for card in self.deck.draw(2)]) for _ in range(nbr_players)]
         self.verbose = verbose
         self.black_jacks = list()
         self.check_for_blackjack()
 
     def check_for_blackjack(self):
-        for player_index, player in enumerate(self.agent):
+        for player_index, player in enumerate(self.agents):
             card_values = [card.value for card in player.hand]
 
             def check_for_royalty(values):
@@ -47,14 +47,14 @@ class InteractiveGame:
         self.deck = Deck(self.nbr_decks)
         self.deck.shuffle()
         self.dealer = Player([card for card in self.deck.draw(1)])
-        self.agent = [Player([card for card in self.deck.draw(2)]) for _ in range(self.nbr_players)]
+        self.agents = [Player([card for card in self.deck.draw(2)]) for _ in range(self.nbr_players)]
         self.black_jacks = list()
         self.check_for_blackjack()
 
     def print_state(self):
         print('dealer has: {}, value is: {}'.format([str(card) for card in self.dealer.hand],
                                                     self.dealer.value_of_hand()))
-        for player_index, player in enumerate(self.agent):
+        for player_index, player in enumerate(self.agents):
             print('player {} has: {}, value is: {}'.format(player_index + 1, [str(card) for card in player.hand],
                                                            player.value_of_hand()))
 
@@ -150,8 +150,8 @@ class InteractiveGame:
         return victory
 
     def play(self):
-        if len(self.black_jacks) < len(self.agent):
-            for player_index, player in enumerate(self.agent):
+        if len(self.black_jacks) < len(self.agents):
+            for player_index, player in enumerate(self.agents):
                 if player_index in self.black_jacks:
                     continue
                 if self.verbose == 1:
@@ -161,7 +161,7 @@ class InteractiveGame:
 
         dealer_hand_value = self.dealer.value_of_hand()
         winners = list()
-        for player_index, player in enumerate(self.agent):
+        for player_index, player in enumerate(self.agents):
             hand_value = player.value_of_hand()
             winners.append(self.find_winner(hand_value, dealer_hand_value, player_index))
         return winners
