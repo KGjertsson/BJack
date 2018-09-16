@@ -1,6 +1,7 @@
 class Player:
     def __init__(self, cards):
         self.hand = cards
+        self.doubled = False  # TODO: possibly no need for this, remove if unnecessary
 
     @staticmethod
     def _raw_value(cards):

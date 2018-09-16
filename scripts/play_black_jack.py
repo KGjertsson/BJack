@@ -5,7 +5,5 @@ if len(interactive_game.black_jacks) < len(interactive_game.agents):
     interactive_game.ifu()
     interactive_game.print_state()
     print()
-    print()
-    print()
 
 interactive_game.play()

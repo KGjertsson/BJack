@@ -15,6 +15,12 @@ class InteractiveGame:
         0: Don't print anything.
         1: Print human level information.
         2: Print debugging information.
+
+    Actions:
+        0: hit
+        1: stay
+        2: double
+        3: split
     """
 
     def __init__(self, nbr_players, nbr_decks, verbose=1):
@@ -60,17 +66,27 @@ class InteractiveGame:
 
     @staticmethod
     def ifu():
+        print('############################')
         print('### Instructions For Use ###')
-        print('0: add card')
-        print('1: stay')
+        print('Available commands:')
+        print('hit')
+        print('stay')
         print('############################')
         print()
 
     def get_action(self, player):
         raw_action = input(">>")
-        try:
-            action = int(raw_action)
-        except ValueError:
+        if raw_action == 'hit':
+            action = 0
+        elif raw_action == 'stay':
+            action = 1
+        elif raw_action == 'double':
+            # TODO: insert error handling, double not always allowed
+            action = 2
+        elif raw_action == 'split':
+            # TODO: insert error handling, splitting not always allowed
+            action = 3
+        else:
             if self.verbose == 1:
                 print('Invalid command, see IFU for list of valid inputs: \n')
             self.ifu()

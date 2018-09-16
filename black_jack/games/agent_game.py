@@ -39,8 +39,14 @@ class MultipleAgentGame(AgentGame):
     def __init__(self, agent_configs, nbr_decks, verbose):
         self.agent_configs = agent_configs
         self.agent_type = self.check_for_different_agents(self.agent_configs)
+        player_kwargs = dict()
+        player_kwargs['betting_strategy'] = self.agent_configs[0]['betting_strategy']
+        player_kwargs['cash'] = self.agent_configs[0]['current_cash']
+        player_kwargs['actions'] = self.agent_configs[0]['possible_actions']
+
         super().__init__(
-            nbr_players=len(self.agent_configs), nbr_decks=nbr_decks, agent_type=self.agent_type, verbose=verbose)
+            nbr_players=len(self.agent_configs), nbr_decks=nbr_decks, agent_type=self.agent_type, verbose=verbose,
+            **player_kwargs)
 
         if self.agent_type == 'different':
             self.agents = [self.init_agent(current_config, config_index) for config_index, current_config in
