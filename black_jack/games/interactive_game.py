@@ -4,7 +4,6 @@ from ..components.card import Card
 
 # TODO:
 #   1. split
-#   2. double
 
 ROYALTIES = [11, 12, 13]
 
@@ -32,6 +31,7 @@ class InteractiveGame:
         self.agents = [Player([card for card in self.deck.draw(2)]) for _ in range(nbr_players)]
         self.verbose = verbose
         self.black_jacks = list()
+        self.doubles = [False for _ in range(len(self.agents))]
         self.check_for_blackjack()
 
     def check_for_blackjack(self):
@@ -50,11 +50,13 @@ class InteractiveGame:
                     print('Player {} got black jack and won'.format(player_index + 1))
 
     def reset_board(self):
+        # TODO: look into calling super function for agent game
         self.deck = Deck(self.nbr_decks)
         self.deck.shuffle()
         self.dealer = Player([card for card in self.deck.draw(1)])
         self.agents = [Player([card for card in self.deck.draw(2)]) for _ in range(self.nbr_players)]
         self.black_jacks = list()
+        self.doubles = [False for _ in range(len(self.agents))]
         self.check_for_blackjack()
 
     def print_state(self):
@@ -71,6 +73,7 @@ class InteractiveGame:
         print('Available commands:')
         print('hit')
         print('stay')
+        print('double')
         print('############################')
         print()
 
@@ -81,8 +84,11 @@ class InteractiveGame:
         elif raw_action == 'stay':
             action = 1
         elif raw_action == 'double':
-            # TODO: insert error handling, double not always allowed
-            action = 2
+            if 7 <= player.value_of_hand() <= 11:
+                action = 2
+            else:
+                print('invalid command \'double\' for value of hand: {}'.format(player.value_of_hand()))
+                return self.get_action(player)
         elif raw_action == 'split':
             # TODO: insert error handling, splitting not always allowed
             action = 3
@@ -114,7 +120,19 @@ class InteractiveGame:
             return True
         elif action == 2:
             # double
-            pass
+            player.hand += [card for card in self.deck.draw(1)]
+            if self.verbose == 1:
+                self.print_state()
+
+            if player.value_of_hand() > 21:
+                player.hand = [Card('none', 2)]
+                player.hand[0].set_value = -1
+                if self.verbose == 1:
+                    print('Player {} is fat'.format(player_index + 1))
+                return False
+            self.doubles[player_index] = True
+            return True
+
         elif action == 3:
             # split
             pass
@@ -135,20 +153,27 @@ class InteractiveGame:
         victory == 1: player won
         victory == 2: player played even with the dealer
         victory == 3: player got black jack
-
+        victory == 4: player won with doubled money
+        victory == 5: player lost with doubled money
         """
         if player_index in self.black_jacks:
             victory = 3
             if self.verbose == 1:
                 print('Player {} got black jack and won'.format(player_index))
         else:
-            victory = 0
+            if self.doubles[player_index]:
+                victory = 5
+            else:
+                victory = 0
             if hand_value != -1:
                 if dealer_hand_value != -1:
                     if hand_value > dealer_hand_value:
                         if self.verbose == 1:
                             print('Player {} won'.format(player_index + 1))
-                        victory = 1
+                        if self.doubles[player_index]:
+                            victory = 4
+                        else:
+                            victory = 1
                     elif hand_value == dealer_hand_value:
                         if self.verbose == 1:
                             print('Player {} played even with the dealer.'.format(player_index + 1))
@@ -159,7 +184,10 @@ class InteractiveGame:
                 else:
                     if self.verbose == 1:
                         print('Player {} won'.format(player_index + 1))
-                    victory = 1
+                    if self.doubles[player_index]:
+                        victory = 4
+                    else:
+                        victory = 1
             else:
                 if self.verbose == 1:
                     print('Player {} lost'.format(player_index + 1))
@@ -168,7 +196,7 @@ class InteractiveGame:
     def play(self):
         if len(self.black_jacks) < len(self.agents):
             for player_index, player in enumerate(self.agents):
-                if player_index in self.black_jacks:
+                if player_index in self.black_jacks or self.doubles[player_index]:
                     continue
                 if self.verbose == 1:
                     print('player {}, what do you want to do?'.format(player_index + 1))

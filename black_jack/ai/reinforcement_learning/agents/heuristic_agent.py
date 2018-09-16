@@ -39,8 +39,7 @@ class HeuristicAgent(AbstractAgent):
         elif action == 'stay':
             action = 1
         elif action == 'double':
-            action = 0
-            # TODO: implement, currently using hit
+            action = 2 
         elif action == 'split':
             # TODO: implement, currently using hit
             action = 0

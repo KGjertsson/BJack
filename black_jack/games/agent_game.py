@@ -32,6 +32,7 @@ class AgentGame(InteractiveGame):
             agent.player = Player([card for card in self.deck.draw(2)])
 
         self.black_jacks = list()
+        self.doubles = [False for _ in range(len(self.agents))]
         self.check_for_blackjack()
 
 

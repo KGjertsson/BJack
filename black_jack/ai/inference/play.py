@@ -33,6 +33,10 @@ def play_while_cash_left(current_cash, **play_kwargs):
                 current_cash += bet
             elif stat == 3:
                 current_cash += bet * 1.5
+            elif stat == 4:
+                current_cash += bet * 2
+            elif stat == 5:
+                current_cash -= bet * 2
 
         money_over_time.append(current_cash)
     return money_over_time
@@ -62,10 +66,13 @@ def play_while_cash_left_multiple_agents(agent_configs, nbr_decks, verbose):
                     agent.cash += bet
                 elif stat == 3:
                     agent.cash += bet * 1.5
+                elif stat == 4:
+                    agent.cash += bet * 2
+                elif stat == 5:
+                    agent.cash -= bet * 2
                 current_cash = max(agent.cash, 0)
             else:
                 current_cash = 0
-
             money_over_time[agent_id].cash.append(current_cash)
 
         if sum([money.cash[-1] for money in money_over_time]) == 0:
