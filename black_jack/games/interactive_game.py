@@ -50,7 +50,6 @@ class InteractiveGame:
                     print('Player {} got black jack and won'.format(player_index + 1))
 
     def reset_board(self):
-        # TODO: look into calling super function for agent game
         self.deck = Deck(self.nbr_decks)
         self.deck.shuffle()
         self.dealer = Player([card for card in self.deck.draw(1)])

@@ -7,6 +7,20 @@ class Money:
         self.cash = list()  # list
 
 
+def manage_returned_cash(stat, bet, current_cash):
+    if stat == 0:
+        current_cash -= bet
+    elif stat == 1:
+        current_cash += bet
+    elif stat == 3:
+        current_cash += bet * 1.5
+    elif stat == 4:
+        current_cash += bet * 2
+    elif stat == 5:
+        current_cash -= bet * 2
+    return current_cash
+
+
 def play_game(agent_type, game_type, nbr_players, nbr_decks, starting_cash, possible_actions, verbose, **game_kwargs):
     if game_type == 'interactive':
         game = interactive_game.InteractiveGame(nbr_players, nbr_decks)
@@ -27,16 +41,7 @@ def play_while_cash_left(current_cash, **play_kwargs):
         stats, bets = play_game(**play_kwargs)
 
         for stat, bet in zip(stats, bets):
-            if stat == 0:
-                current_cash -= bet
-            elif stat == 1:
-                current_cash += bet
-            elif stat == 3:
-                current_cash += bet * 1.5
-            elif stat == 4:
-                current_cash += bet * 2
-            elif stat == 5:
-                current_cash -= bet * 2
+            current_cash = manage_returned_cash(stat, bet, current_cash)
 
         money_over_time.append(current_cash)
     return money_over_time
@@ -60,16 +65,7 @@ def play_while_cash_left_multiple_agents(agent_configs, nbr_decks, verbose):
 
         for agent_id, (stat, bet, agent) in enumerate(zip(stats, bets, game.agents)):
             if agent.cash > 0:
-                if stat == 0:
-                    agent.cash -= bet
-                elif stat == 1:
-                    agent.cash += bet
-                elif stat == 3:
-                    agent.cash += bet * 1.5
-                elif stat == 4:
-                    agent.cash += bet * 2
-                elif stat == 5:
-                    agent.cash -= bet * 2
+                agent.cash = manage_returned_cash(stat, bet, agent.cash)
                 current_cash = max(agent.cash, 0)
             else:
                 current_cash = 0

@@ -4,7 +4,7 @@ import numpy as np
 import matplotlib.pyplot as plt
 
 if __name__ == '__main__':
-    number_iterations = 1
+    number_iterations = 10
     verbose = 0
     plot_figures = True
     nbr_decks = 6
