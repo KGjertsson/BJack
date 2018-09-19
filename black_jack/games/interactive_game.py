@@ -154,7 +154,8 @@ stay
 
         elif action == 3:
             self.init_new_players_after_split(player, player_index)
-            self.print_state()
+            if self.verbose == 1:
+                self.print_state()
             return self.perform_round(player, player_index)
 
     def dealer_draws(self):
