@@ -61,15 +61,17 @@ def play_while_cash_left_multiple_agents(agent_configs, nbr_decks, verbose):
     game = agent_game.MultipleAgentGame(agent_configs, nbr_decks, verbose)
     continue_playing = True
     while continue_playing:
-        stats, bets = game.play()
+        stats, bets, ancestor_indices = game.play()
 
-        for agent_id, (stat, bet, agent) in enumerate(zip(stats, bets, game.agents)):
-            if agent.cash > 0:
-                agent.cash = manage_returned_cash(stat, bet, agent.cash)
-                current_cash = max(agent.cash, 0)
+        for agent_id, (stat, bet, agent, ancestor_index) in enumerate(zip(stats, bets, game.agents, ancestor_indices)):
+            current_agent = agent if ancestor_index is None else game.agents[ancestor_index]
+            if current_agent.cash > 0:
+                current_agent.cash = manage_returned_cash(stat, bet, current_agent.cash)
+                current_cash = max(current_agent.cash, 0)
             else:
                 current_cash = 0
-            money_over_time[agent_id].cash.append(current_cash)
+            money_id = agent_id if ancestor_index is None else ancestor_index
+            money_over_time[money_id].cash.append(current_cash)
 
         if sum([money.cash[-1] for money in money_over_time]) == 0:
             continue_playing = False

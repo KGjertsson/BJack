@@ -2,9 +2,6 @@ from ..components.player import Player
 from ..components.deck import Deck
 from ..components.card import Card
 
-# TODO:
-#   1. split
-
 ROYALTIES = [11, 12, 13]
 
 
@@ -14,7 +11,7 @@ class InteractiveGame:
         0: Don't print anything.
         1: Print human level information.
         2: Print debugging information.
-
+stay
     Actions:
         0: hit
         1: stay
@@ -53,7 +50,11 @@ class InteractiveGame:
         self.deck = Deck(self.nbr_decks)
         self.deck.shuffle()
         self.dealer = Player([card for card in self.deck.draw(1)])
-        self.agents = [Player([card for card in self.deck.draw(2)]) for _ in range(self.nbr_players)]
+        nbr_children = 0
+        for agent in self.agents:
+            if agent.ancestor_index is not None:
+                nbr_children += 1
+        self.agents = [Player([card for card in self.deck.draw(2)]) for _ in range(self.nbr_players - nbr_children)]
         self.black_jacks = list()
         self.doubles = [False for _ in range(len(self.agents))]
         self.check_for_blackjack()
@@ -64,6 +65,17 @@ class InteractiveGame:
         for player_index, player in enumerate(self.agents):
             print('player {} has: {}, value is: {}'.format(player_index + 1, [str(card) for card in player.hand],
                                                            player.value_of_hand()))
+
+    def init_new_players_after_split(self, player, player_index):
+        new_player = Player([player.hand[1]])
+        new_player.hand.append([card for card in self.deck.draw(1)][0])
+        new_player.ancestor_index = player_index if player.ancestor_index is not None else player.ancestor_index
+
+        self.agents.append(new_player)
+        player.hand = [player.hand[0]]
+        player.hand.append([card for card in self.deck.draw(1)][0])
+
+        self.doubles.append(False)
 
     @staticmethod
     def ifu():
@@ -86,10 +98,18 @@ class InteractiveGame:
             if 7 <= player.value_of_hand() <= 11:
                 action = 2
             else:
-                print('invalid command \'double\' for value of hand: {}'.format(player.value_of_hand()))
+                if self.verbose == 1:
+                    print('invalid command \'double\' for value of hand: {}'.format(player.value_of_hand()))
                 return self.get_action(player)
         elif raw_action == 'split':
-            # TODO: insert error handling, splitting not always allowed
+            if len(player.hand) != 2:
+                if self.verbose == 1:
+                    print('invalid command \'split\' when number of cards != 2')
+                return self.get_action(player)
+            elif player.hand[0].value != player.hand[1].value:
+                if self.verbose == 1:
+                    print('invalid command \'split\' when number value of cards are not equal')
+                return self.get_action(player)
             action = 3
         else:
             if self.verbose == 1:
@@ -133,8 +153,9 @@ class InteractiveGame:
             return True
 
         elif action == 3:
-            # split
-            pass
+            self.init_new_players_after_split(player, player_index)
+            self.print_state()
+            return self.perform_round(player, player_index)
 
     def dealer_draws(self):
         while self.dealer.value_of_hand() < 17:

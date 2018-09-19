@@ -8,11 +8,12 @@ from ..components.deck import Deck
 class AgentGame(InteractiveGame):
     def __init__(self, nbr_players, nbr_decks, agent_type, verbose, **agent_kwargs):
         super().__init__(nbr_players, nbr_decks, verbose)
+        self.agent_kwargs = agent_kwargs
 
         if agent_type == 'random':
-            self.agents = [RandomAgent(player=player, **agent_kwargs) for player in self.agents]
+            self.agents = [RandomAgent(player=player, **self.agent_kwargs) for player in self.agents]
         elif agent_type == 'heuristic':
-            self.agents = [HeuristicAgent(player=player, **agent_kwargs) for player in self.agents]
+            self.agents = [HeuristicAgent(player=player, **self.agent_kwargs) for player in self.agents]
         elif agent_type == 'different':
             pass
 
@@ -21,12 +22,20 @@ class AgentGame(InteractiveGame):
 
     def play(self):
         winners = super().play()
-        return winners, [player.bet() for player in self.agents]
+        return winners, [player.bet() for player in self.agents], [agent.player.ancestor_index for agent in self.agents]
 
     def reset_board(self):
         self.deck = Deck(self.nbr_decks)
         self.deck.shuffle()
         self.dealer = Player([card for card in self.deck.draw(1)])
+
+        child_agents = list()
+        for agent_index, agent in enumerate(self.agents):
+            if agent.player.ancestor_index is not None:
+                child_agents = [agent_index] + child_agents
+
+        for agent_index in child_agents:
+            self.agents.pop(agent_index)
 
         for agent in self.agents:
             agent.player = Player([card for card in self.deck.draw(2)])
@@ -34,6 +43,18 @@ class AgentGame(InteractiveGame):
         self.black_jacks = list()
         self.doubles = [False for _ in range(len(self.agents))]
         self.check_for_blackjack()
+
+    def init_new_players_after_split(self, player, player_index):
+        new_player = Player([player.player.hand[1]])
+        new_player.hand.append([card for card in self.deck.draw(1)][0])
+        new_player.ancestor_index = player_index if player.player.ancestor_index is None \
+            else player.player.ancestor_index
+
+        self.agents.append(HeuristicAgent(player=new_player, **self.agent_kwargs))
+
+        player.player.hand = [player.player.hand[0]]
+        player.player.hand.append([card for card in self.deck.draw(1)][0])
+        self.doubles.append(False)
 
 
 class MultipleAgentGame(AgentGame):

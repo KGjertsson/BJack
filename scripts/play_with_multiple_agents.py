@@ -4,7 +4,7 @@ import numpy as np
 import matplotlib.pyplot as plt
 
 if __name__ == '__main__':
-    number_iterations = 10
+    number_iterations = 100
     verbose = 0
     plot_figures = True
     nbr_decks = 6
@@ -15,14 +15,14 @@ if __name__ == '__main__':
         heuristic_agent_config = {
             'agent_type': 'heuristic',
             'current_cash': starting_cash,
-            'possible_actions': [0, 1, 2],
+            'possible_actions': [0, 1, 2, 3],
             'betting_strategy': 'fixed'
         }
 
         random_agent_config = {
             'agent_type': 'random',
             'current_cash': starting_cash,
-            'possible_actions': [0, 1, 2],
+            'possible_actions': [0, 1, 2, 3],
             'betting_strategy': 'fixed'
         }
 

@@ -8,7 +8,7 @@ class HeuristicAgent(AbstractAgent):
         player = state['player'].player
         dealer = state['dealer']
 
-        if player.hand[0] == player.hand[1]:
+        if player.hand[0].value == player.hand[1].value:
 
             action = \
                 heuristic_tables.doubles_heuristic_table[
@@ -41,7 +41,6 @@ class HeuristicAgent(AbstractAgent):
         elif action == 'double':
             action = 2
         elif action == 'split':
-            # TODO: implement, currently using hit
-            action = 0
+            action = 3
 
         return action
