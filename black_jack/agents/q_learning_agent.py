@@ -3,34 +3,18 @@ import numpy as np
 from black_jack.agents.abstract_agent import AbstractAgent
 
 
-class Qlearner:
-    """
-    State representation:
-        - agent's current point total
-        - value of dealer's face up card
-        - whether the hand is soft
-        (- whether the hand can be split)
+class QLearningState:
+    def __init__(self, game_state):
+        self.state = game_state
+        self.actions = dict()
 
-    Actions:
-        - hit
-        - stay
-        (- split)
-        (- double down)
-
-    Reward system:
-        For each action that does not result in a transition to a terminal state, a reward of 0 is given.
-        Once a terminal state has been reached, a reward is given based on the size of the agent's bet. I.e.
-        +given_bet if the agent won and -given_bet if the agent lost.  
-    """
-
-    def __init__(self, alpha, epsilon, gamma):
-        self.alpha = alpha
-        self.epsilon = epsilon
-        self.gamma = gamma
+    def __str__(self):
+        return '<dealer=' + str(self.state['dealer'].hand[0]) + ', player=' + ','.join(
+            [str(card) for card in self.state['player'].hand]) + '>'
 
 
-class Learner(AbstractAgent):
-    def __init__(self, alpha, epsilon, gamma, learning_rate, **player_init_kwargs):
+class QLearner(AbstractAgent):
+    def __init__(self, alpha, epsilon, gamma, learning_rate, learning=True, **player_init_kwargs):
         super().__init__(**player_init_kwargs)
         self._Q = {}
         self.alpha = alpha
@@ -40,13 +24,16 @@ class Learner(AbstractAgent):
 
         self._last_state = None
         self._last_action = None
-        self._learning = True
+        self._learning = learning
 
     def action(self, state):
+        # TODO: fix or comment on discrepancy between q learning state and blackjack state
+        state = QLearningState(state)
+
         if state in self._Q and np.random.uniform(0, 1) >= self.epsilon:
             action = max(self._Q[state], key=self._Q[state].get)
         else:
-            action = np.random.choice(self.actions)
+            action = np.random.choice(self.legal_actions)
 
         if state not in self._Q:
             self._Q[state] = {}

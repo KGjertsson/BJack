@@ -2,7 +2,28 @@ from ..error_handling import decorators
 
 
 class Card:
+    """
+    Representation of a playing card. A card has a value and a suite. The values range between 2 and 14, where 2 - 10
+    are self explanatory and the rest follow the mapping:
+        11: jack
+        12: queen
+        13: king
+        14: ace
+
+    The value of a card in the game of blackjack differs from their value identifiers. 2 - 10 always retain the value
+    indicated by their card number, while jack, queen and king all have the same value of 10. Aces are worth 11
+    (special rules apply for aces and their final value is determined dynamically in the game).
+
+    The suites are of course:
+        hearts
+        clubs
+        diamonds
+        spades
+    """
+
     def __init__(self, suite, value):
+        # TODO: make sure we don't call the decorator explicitly, as it is now it sort of defeats the purpose of having
+        # TODO: a decorator in the first place
         decorators.card_validator(suite, value)
         self.suite = suite
         self.value = value

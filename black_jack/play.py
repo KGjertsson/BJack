@@ -1,8 +1,8 @@
 from black_jack.games import agent_game
 
 
-def play_while_cash_left(agent_configs, nbr_decks, verbose):
-    game = agent_game.AgentGame(agent_configs, nbr_decks, verbose)
+def play_while_cash_left(agent_configs, nbr_decks, verbose, game_cls=agent_game.AgentGame):
+    game = game_cls(agent_configs, nbr_decks, verbose)
     continue_playing = True
     while continue_playing:
         stats, bets, ancestor_indices = game.play()

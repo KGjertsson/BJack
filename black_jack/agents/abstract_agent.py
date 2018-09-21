@@ -1,10 +1,10 @@
 import abc
+import copy
 
 import numpy as np
 
 
 class AbstractAgent(abc.ABC):
-    # TODO: update architecture such that extra args aren't needed
     def __init__(self, cash, actions, player, betting_strategy):
         self.cash = cash
         self.initial_cash = cash
@@ -19,6 +19,15 @@ class AbstractAgent(abc.ABC):
     @abc.abstractmethod
     def action(self, state):
         pass
+
+    @property
+    def legal_actions(self):
+        actions = copy.copy(self.actions)
+        if (len(self.player.hand) != 2 or self.player.hand[0].value != self.player.hand[1].value) and 3 in actions:
+            actions.pop(3)
+        if not 7 <= self.player.value_of_hand() <= 11 and 2 in actions:
+            actions.pop(2)
+        return actions
 
     def bet(self):
         if self.betting_strategy == 'random':

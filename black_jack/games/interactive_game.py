@@ -10,7 +10,7 @@ class InteractiveGame:
     Verbose:
         0: Don't print anything.
         1: Print human level information.
-        2: Print debugging information.
+        2: Print debugging information (currently not implemented).
 
     Actions:
         0: hit

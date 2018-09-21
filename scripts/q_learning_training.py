@@ -3,6 +3,8 @@ import numpy as np
 from tqdm import tqdm
 
 from black_jack import play
+from black_jack.agents.q_learning_agent import QLearner
+from black_jack.games import q_learning_game
 
 if __name__ == '__main__':
     number_iterations = 1
@@ -14,20 +16,21 @@ if __name__ == '__main__':
 
     for _ in tqdm(range(number_iterations)):
         agent_configs = [{
-            'agent_type': 'q_learning',
+            'agent_type': QLearner,
             'alpha': 0.1,
             'epsilon': 0.1,
             'gamma': 0.1,
             'learning_rate': 0.1,
-            'current_cash': starting_cash,
-            'possible_actions': [0, 1, 2, 3],
+            'cash': starting_cash,
+            'actions': [0, 1, 2, 3],
             'betting_strategy': 'fixed'
         }]
 
         agents = play.play_while_cash_left(
             agent_configs=agent_configs,
             nbr_decks=nbr_decks,
-            verbose=verbose)
+            verbose=verbose,
+            game_cls=q_learning_game.QLearningGame)
 
         performance.append([{'cash': agent.cash_progression, 'name': str(agent)} for agent in agents])
 
