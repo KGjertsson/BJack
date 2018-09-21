@@ -1,11 +1,12 @@
+import copy
+
 import matplotlib.pyplot as plt
 import numpy as np
 from tqdm import tqdm
-import copy
 
+from black_jack import play
 from black_jack.agents.heuristic_agent import HeuristicAgent
 from black_jack.agents.random_agent import RandomAgent
-from black_jack.ai.inference import play
 
 if __name__ == '__main__':
     number_iterations = 1
@@ -30,7 +31,7 @@ if __name__ == '__main__':
             'betting_strategy': 'fixed'
         }
 
-        agent_configs = [heuristic_agent_config, copy.copy(heuristic_agent_config)]
+        agent_configs = [heuristic_agent_config, copy.copy(heuristic_agent_config), random_agent_config]
 
         agents = play.play_while_cash_left(
             agent_configs=agent_configs,
