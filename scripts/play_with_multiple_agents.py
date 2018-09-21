@@ -1,10 +1,10 @@
-from black_jack.ai.inference import play
-from black_jack.ai.reinforcement_learning.agents.heuristic_agent import HeuristicAgent
-from black_jack.ai.reinforcement_learning.agents.random_agent import RandomAgent
-
-from tqdm import tqdm
-import numpy as np
 import matplotlib.pyplot as plt
+import numpy as np
+from tqdm import tqdm
+
+from black_jack.agents.heuristic_agent import HeuristicAgent
+from black_jack.agents.random_agent import RandomAgent
+from black_jack.ai.inference import play
 
 if __name__ == '__main__':
     number_iterations = 10

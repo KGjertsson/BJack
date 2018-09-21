@@ -1,6 +1,6 @@
 import numpy as np
 
-from black_jack.ai.reinforcement_learning.agents.abstract_agent import AbstractAgent
+from black_jack.agents.abstract_agent import AbstractAgent
 
 
 class Qlearner:

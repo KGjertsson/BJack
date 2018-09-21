@@ -1,5 +1,5 @@
-from .abstract_agent import AbstractAgent
 from . import heuristic_tables
+from .abstract_agent import AbstractAgent
 
 
 class HeuristicAgent(AbstractAgent):
