@@ -1,4 +1,4 @@
-from ...games import agent_game, interactive_game
+from ...games import agent_game
 
 
 class Money:
@@ -21,44 +21,18 @@ def manage_returned_cash(stat, bet, current_cash):
     return current_cash
 
 
-def play_game(agent_type, game_type, nbr_players, nbr_decks, starting_cash, possible_actions, verbose, **game_kwargs):
-    if game_type == 'interactive':
-        game = interactive_game.InteractiveGame(nbr_players, nbr_decks)
-    else:
-        game = agent_game.AgentGame(nbr_players=nbr_players,
-                                    nbr_decks=nbr_decks,
-                                    cash=starting_cash,
-                                    agent_type=agent_type,
-                                    actions=possible_actions,
-                                    verbose=verbose,
-                                    **game_kwargs)
-    return game.play()
-
-
-def play_while_cash_left(current_cash, **play_kwargs):
-    money_over_time = list()
-    while current_cash > 0:
-        stats, bets = play_game(**play_kwargs)
-
-        for stat, bet in zip(stats, bets):
-            current_cash = manage_returned_cash(stat, bet, current_cash)
-
-        money_over_time.append(current_cash)
-    return money_over_time
-
-
-def play_while_cash_left_multiple_agents(agent_configs, nbr_decks, verbose):
+def play_while_cash_left(agent_configs, nbr_decks, verbose):
     money_over_time = list()
     for agent_config in agent_configs:
 
         init_id = 0
         for money in money_over_time:
-            if agent_config['agent_type'] in money.name:
+            if str(agent_config['agent_type']) in money.name:
                 init_id += 1
 
-        money_over_time.append(Money(agent_config['agent_type'] + str(init_id)))
+        money_over_time.append(Money(str(agent_config['agent_type']) + str(init_id)))
 
-    game = agent_game.MultipleAgentGame(agent_configs, nbr_decks, verbose)
+    game = agent_game.AgentGame(agent_configs, nbr_decks, verbose)
     continue_playing = True
     while continue_playing:
         stats, bets, ancestor_indices = game.play()

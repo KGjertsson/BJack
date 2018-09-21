@@ -3,17 +3,21 @@ from . import heuristic_tables
 
 
 class HeuristicAgent(AbstractAgent):
+    def __str__(self):
+        return 'HeuristicAgent'
+
     def action(self, state):
         # state: [player, dealer]
         player = state['player'].player
         dealer = state['dealer']
 
-        if player.hand[0].calculate_value() == player.hand[1].calculate_value():
+        if player.hand[0].value == player.hand[1].value:
+            value = player.hand[0].calculate_value() if player.hand[0].calculate_value() != 1 else 11
 
             action = \
                 heuristic_tables.doubles_heuristic_table[
                     dealer.hand[0].calculate_value()
-                ][(player.hand[0].calculate_value(), player.hand[0].calculate_value())]
+                ][(value, value)]
 
         elif player.hand[0].calculate_value() == 11:
 

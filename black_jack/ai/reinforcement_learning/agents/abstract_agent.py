@@ -4,12 +4,16 @@ import numpy as np
 
 
 class AbstractAgent(abc.ABC):
+    # TODO: update architecture such that extra args aren't needed
     def __init__(self, cash, actions, player, betting_strategy):
         self.cash = cash
         self.initial_cash = cash
         self.actions = actions
         self.player = player
         self.betting_strategy = betting_strategy
+
+    def __str__(self):
+        return 'AbstractAgent'
 
     @abc.abstractmethod
     def action(self, state):

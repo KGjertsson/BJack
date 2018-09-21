@@ -1,13 +1,10 @@
 from black_jack.ai.inference import play
-from black_jack.ai.reinforcement_learning.agents.heuristic_agent import HeuristicAgent
-from black_jack.ai.reinforcement_learning.agents.random_agent import RandomAgent
-
 from tqdm import tqdm
 import numpy as np
 import matplotlib.pyplot as plt
 
 if __name__ == '__main__':
-    number_iterations = 10
+    number_iterations = 1
     verbose = 0
     plot_figures = True
     nbr_decks = 6
@@ -15,21 +12,16 @@ if __name__ == '__main__':
     performance = list()
 
     for _ in tqdm(range(number_iterations)):
-        heuristic_agent_config = {
-            'agent_type': HeuristicAgent,
-            'cash': starting_cash,
-            'actions': [0, 1, 2, 3],
+        agent_configs = [{
+            'agent_type': 'q_learning',
+            'alpha': 0.1,
+            'epsilon': 0.1,
+            'gamma': 0.1,
+            'learning_rate': 0.1,
+            'current_cash': starting_cash,
+            'possible_actions': [0, 1, 2, 3],
             'betting_strategy': 'fixed'
-        }
-
-        random_agent_config = {
-            'agent_type': RandomAgent,
-            'cash': starting_cash,
-            'actions': [0, 1, 2, 3],
-            'betting_strategy': 'fixed'
-        }
-
-        agent_configs = [heuristic_agent_config, random_agent_config]
+        }]
 
         money_over_time = play.play_while_cash_left(
             agent_configs=agent_configs,

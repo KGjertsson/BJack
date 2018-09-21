@@ -50,14 +50,18 @@ stay
         self.deck = Deck(self.nbr_decks)
         self.deck.shuffle()
         self.dealer = Player([card for card in self.deck.draw(1)])
+        self.reset_agents()
+
+        self.black_jacks = list()
+        self.doubles = [False for _ in range(len(self.agents))]
+        self.check_for_blackjack()
+
+    def reset_agents(self):
         nbr_children = 0
         for agent in self.agents:
             if agent.ancestor_index is not None:
                 nbr_children += 1
         self.agents = [Player([card for card in self.deck.draw(2)]) for _ in range(self.nbr_players - nbr_children)]
-        self.black_jacks = list()
-        self.doubles = [False for _ in range(len(self.agents))]
-        self.check_for_blackjack()
 
     def print_state(self):
         print('dealer has: {}, value is: {}'.format([str(card) for card in self.dealer.hand],
