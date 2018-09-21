@@ -11,7 +11,7 @@ class InteractiveGame:
         0: Don't print anything.
         1: Print human level information.
         2: Print debugging information.
-stay
+
     Actions:
         0: hit
         1: stay

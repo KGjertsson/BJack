@@ -6,12 +6,10 @@ class AgentGame(InteractiveGame):
     def __init__(self, agent_kwargs, nbr_decks, verbose):
         super().__init__(len(agent_kwargs), nbr_decks, verbose)
 
-        agents = [agent_karg.pop('agent_type') for agent_karg in agent_kwargs]
+        self.agent_classes = [agent_kwarg.pop('agent_type') for agent_kwarg in agent_kwargs]
         self.agents = [agent(player=player, **agent_kwarg) for player, agent_kwarg, agent in
-                       zip(self.agents, agent_kwargs, agents)]
-
+                       zip(self.agents, agent_kwargs, self.agent_classes)]
         self.agent_kwargs = agent_kwargs
-        self.agent_classes = agents
 
     def get_action(self, player):
         return player.action(state={'player': player, 'dealer': self.dealer})

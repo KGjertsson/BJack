@@ -1,10 +1,10 @@
 from ...games import agent_game
 
 
-class Money:
-    def __init__(self, name):
-        self.name = name  # str
-        self.cash = list()  # list
+# class Money:
+#     def __init__(self, name):
+#         self.name = name  # str
+#         self.cash = list()  # list
 
 
 def manage_returned_cash(stat, bet, current_cash):
@@ -22,15 +22,15 @@ def manage_returned_cash(stat, bet, current_cash):
 
 
 def play_while_cash_left(agent_configs, nbr_decks, verbose):
-    money_over_time = list()
-    for agent_config in agent_configs:
-
-        init_id = 0
-        for money in money_over_time:
-            if str(agent_config['agent_type']) in money.name:
-                init_id += 1
-
-        money_over_time.append(Money(str(agent_config['agent_type']) + str(init_id)))
+    # money_over_time = list()
+    # for agent_config in agent_configs:
+    #
+    #     init_id = 0
+    #     for money in money_over_time:
+    #         if str(agent_config['agent_type']) in money.name:
+    #             init_id += 1
+    #
+    #     money_over_time.append(Money(str(agent_config['agent_type']) + str(init_id)))
 
     game = agent_game.AgentGame(agent_configs, nbr_decks, verbose)
     continue_playing = True
@@ -45,11 +45,11 @@ def play_while_cash_left(agent_configs, nbr_decks, verbose):
             else:
                 current_cash = 0
             money_id = agent_id if ancestor_index is None else ancestor_index
-            money_over_time[money_id].cash.append(current_cash)
+            # money_over_time[money_id].cash.append(current_cash)
+            game.agents[money_id].cash_progression.append(current_cash)
 
-        if sum([money.cash[-1] for money in money_over_time]) == 0:
+        game.reset_board()
+        if sum([agent.cash_progression[-1] for agent in game.agents]) == 0:
             continue_playing = False
-        else:
-            game.reset_board()
 
-    return money_over_time
+    return game.agents

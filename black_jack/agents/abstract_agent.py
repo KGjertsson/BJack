@@ -11,6 +11,7 @@ class AbstractAgent(abc.ABC):
         self.actions = actions
         self.player = player
         self.betting_strategy = betting_strategy
+        self.cash_progression = list()
 
     def __str__(self):
         return 'AbstractAgent'
