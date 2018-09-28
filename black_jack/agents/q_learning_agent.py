@@ -29,14 +29,15 @@ class QLearningState:
         return hash(self.__str__()) % ((sys.maxsize + 1) * 2)
 
     def __str__(self):
+        # TODO: change to sorted state if there's ever energy, would drastically reduce the number of states (obv)
         return '<dealer=' + str(self.state['dealer'].hand[0]) + ', player=' + ','.join(
             [str(card) for card in self.state['player'].hand]) + '>'
 
 
 class QLearner(AbstractAgent):
-    def __init__(self, alpha, epsilon, gamma, learning_rate, learning=True, **player_init_kwargs):
+    def __init__(self, alpha, epsilon, gamma, learning_rate, learning=True, init_Q=None, **player_init_kwargs):
         super().__init__(**player_init_kwargs)
-        self._Q = {}
+        self._Q = init_Q if init_Q is not None else {}
         self.alpha = alpha
         self.epsilon = epsilon
         self.gamma = gamma
@@ -48,7 +49,7 @@ class QLearner(AbstractAgent):
 
     def action(self, state):
         # TODO: fix or comment on discrepancy between q learning state and blackjack state
-        state = QLearningState(state)
+        state = str(QLearningState(state))
 
         if state in self._Q and np.random.uniform(0, 1) >= self.epsilon:
             action = max(self._Q[state], key=self._Q[state].get)
@@ -65,14 +66,13 @@ class QLearner(AbstractAgent):
         return action
 
     def update(self, new_state, reward):
-        print('we are updating state with {}'.format(new_state))
-        new_state = QLearningState(new_state)
+        new_state = str(QLearningState(new_state))
 
         if self._learning:
             try:
                 old = self._Q[self._last_state][self._last_action]
             except KeyError:
-                foo = 1
+                old = self._Q[self._last_state][self._last_action]
 
             if new_state in self._Q:
                 new = self.gamma * \

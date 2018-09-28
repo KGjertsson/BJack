@@ -5,7 +5,6 @@ from ..components.card import Card
 class QLearningGame(agent_game.AgentGame):
     def perform_round(self, player, player_index):
         action = self.get_action(player)
-        print('we are taking action {}'.format(action))
         if action == 0:
             # hit
             player.hand += [card for card in self.deck.draw(1)]
@@ -49,8 +48,6 @@ class QLearningGame(agent_game.AgentGame):
             if self.verbose == 1:
                 self.print_state()
             self.agents[player_index].update(new_state={'player': player.player, 'dealer': self.dealer}, reward=0)
-            self.agents[len(self.agents) - 1].update(new_state={'player': player.player, 'dealer': self.dealer},
-                                                     reward=0)
             return self.perform_round(player, player_index)
 
     def play(self):
@@ -70,6 +67,8 @@ class QLearningGame(agent_game.AgentGame):
             else:
                 reward = 0
 
-            agent.update(new_state={'player': agent.player, 'dealer': self.dealer}, reward=reward)
+            # if we get blackjack last state will never be set and errors will be thrown unless checked for
+            if agent._last_state is not None:
+                agent.update(new_state={'player': agent.player, 'dealer': self.dealer}, reward=reward)
 
         return winners

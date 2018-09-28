@@ -1,23 +1,32 @@
 import matplotlib.pyplot as plt
 import numpy as np
 from tqdm import tqdm
+import pickle
+import os
 
 from black_jack import play
 from black_jack.agents.q_learning_agent import QLearner
 from black_jack.games import q_learning_game
 
 if __name__ == '__main__':
-    number_iterations = 1
+    number_iterations = 1000
     verbose = 0
-    plot_figures = True
+    plot_figures = False
     nbr_decks = 6
     starting_cash = 1000
     performance = list()
+    agents = None
+    results_file = 'results.pkl'
+    training_progress = list()
 
-    # TODO: look into doubling rules, something is weird here
-    # TODO: ok now everything is weird
+    for _ in range(number_iterations):
 
-    for _ in tqdm(range(number_iterations)):
+        if os.path.isfile(results_file):
+            with open(results_file, 'rb') as f:
+                Q = pickle.load(f)
+        else:
+            Q = None
+
         agent_configs = [{
             'agent_type': QLearner,
             'alpha': 0.1,
@@ -26,7 +35,8 @@ if __name__ == '__main__':
             'learning_rate': 0.1,
             'cash': starting_cash,
             'actions': [0, 1, 2, 3],
-            'betting_strategy': 'fixed'
+            'betting_strategy': 'fixed',
+            'init_Q': Q
         }]
 
         agents = play.play_while_cash_left(
@@ -36,7 +46,13 @@ if __name__ == '__main__':
             game_cls=q_learning_game.QLearningGame)
 
         performance.append([{'cash': agent.cash_progression, 'name': str(agent)} for agent in agents])
+        print('length of current run: {}'.format(len(agents[0].cash_progression)))
+        training_progress.append(len(agents[0].cash_progression))
 
+    with open(results_file, 'wb') as f:
+        pickle.dump(agents[0]._Q, f)
+
+    plt.show(plt.plot(training_progress))
     print('-')
     print('-')
     print('-')
