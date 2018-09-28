@@ -1,3 +1,5 @@
+import sys
+
 import numpy as np
 
 from black_jack.agents.abstract_agent import AbstractAgent
@@ -7,6 +9,24 @@ class QLearningState:
     def __init__(self, game_state):
         self.state = game_state
         self.actions = dict()
+
+    def __eq__(self, other):
+        same = True
+        for my_dealer_card, other_dealer_card in zip(self.state['dealer'].hand, other.state['dealer'].hand):
+            if my_dealer_card.value != other_dealer_card.value:
+                same = False
+
+        my_cards_value = sorted([card.value for card in self.state['player'].hand])
+        other_cards_value = sorted([card.value for card in other.state['player'].hand])
+
+        for my_card_value, other_card_value in zip(my_cards_value, other_cards_value):
+            if my_card_value != other_card_value:
+                same = False
+
+        return same
+
+    def __hash__(self):
+        return hash(self.__str__()) % ((sys.maxsize + 1) * 2)
 
     def __str__(self):
         return '<dealer=' + str(self.state['dealer'].hand[0]) + ', player=' + ','.join(
@@ -45,8 +65,14 @@ class QLearner(AbstractAgent):
         return action
 
     def update(self, new_state, reward):
+        print('we are updating state with {}'.format(new_state))
+        new_state = QLearningState(new_state)
+
         if self._learning:
-            old = self._Q[self._last_state][self._last_action]
+            try:
+                old = self._Q[self._last_state][self._last_action]
+            except KeyError:
+                foo = 1
 
             if new_state in self._Q:
                 new = self.gamma * \

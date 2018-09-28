@@ -12,7 +12,7 @@ class AgentGame(InteractiveGame):
         self.agent_kwargs = agent_kwargs
 
     def get_action(self, player):
-        return player.action(state={'player': player, 'dealer': self.dealer})
+        return player.action(state={'player': player.player, 'dealer': self.dealer})
 
     def play(self):
         winners = super().play()

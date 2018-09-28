@@ -14,6 +14,9 @@ if __name__ == '__main__':
     starting_cash = 1000
     performance = list()
 
+    # TODO: look into doubling rules, something is weird here
+    # TODO: ok now everything is weird
+
     for _ in tqdm(range(number_iterations)):
         agent_configs = [{
             'agent_type': QLearner,

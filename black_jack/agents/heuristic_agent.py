@@ -8,7 +8,7 @@ class HeuristicAgent(AbstractAgent):
 
     def action(self, state):
         # state: [player, dealer]
-        player = state['player'].player
+        player = state['player']
         dealer = state['dealer']
 
         if player.hand[0].value == player.hand[1].value:
